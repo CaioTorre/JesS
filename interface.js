@@ -32,11 +32,18 @@ function atualizar_jogo() {
 	const pecas = ["", "♔", "♕", "♖", "♗", "♘", "♙", "♚", "♛", "♜", "♝", "♞", "♟"];
 	let tabuleiro = document.getElementById('tabuleiro');
 	let tabData = jogo.getTabuleiro();
+	var peca;
 
 	for (var i = 0, n = tabuleiro.rows.length; i < n; i++) {
 		for (var j = 0, m = tabuleiro.rows[i].cells.length; j < m; j++) {
-			obj = tabuleiro.rows[i].cells[j]
-				obj.innerHTML = pecas[tabData[i][j]];
+			console.log("i = " + i + "; j = " + j);
+			peca = tabData.getPeca(i, j);
+			//obj = tabuleiro.rows[i].cells[j]
+				//obj.innerHTML = pecas[tabData[i][j]];
+			if (peca != undefined) {
+				console.log("hit!");
+				tabuleiro.rows[i].cells[j].innerHTML = peca.getUnicode();
+			}
 		}
 	}
 }

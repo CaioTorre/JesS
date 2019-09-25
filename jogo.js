@@ -13,26 +13,32 @@ function JogoXadrez() {
 	const B_KNIGHT = 11; // "&#9822" ♞
 	const B_PAWN   = 12; // "&#9823" ♟
 
+	const P_WHITE  = 0;
+	const P_BLACK  = 1;
+
 	// Esse é um código de exemplo
 	// <<<<<<<
-	var tabuleiro = new Array(8);
-	for(var i = 0; i < 8; i++) {
-		tabuleiro[i] = new Array(8);
-		for(j = 0; j < 8; j++)
-			tabuleiro[i][j] = 0; // ID_1 = 0
-	}
+	// var tabuleiro = new Array(8);
+	// for(var i = 0; i < 8; i++) {
+	// 	tabuleiro[i] = new Array(8);
+	// 	for(j = 0; j < 8; j++)
+	// 		tabuleiro[i][j] = 0; // ID_1 = 0
+	// }
 
-	var peca = {};
-	peca.id = W_PAWN;
-	peca.i = 0;
-	peca.j = 0;
-	tabuleiro[peca.i][peca.j] = peca.id;
+	var _tabuleiro = new Tabuleiro();
+	_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, 0, W_PAWN, "♟"));
+
+	// var peca = {};
+	// peca.id = W_PAWN;
+	// peca.i = 0;
+	// peca.j = 0;
+	// tabuleiro[peca.i][peca.j] = peca.id;
 	// >>>>>>>
 
 	// Esse método retorna um array 8x8 contendo o estado do tabuleiro.
 	this.getTabuleiro = function() {
 		// return tabuleiro.getRepresentacao();
-		return tabuleiro;
+		return _tabuleiro;
 	}
 
 	// Esse método reinicia o jogo.
@@ -42,35 +48,40 @@ function JogoXadrez() {
 
 	// Esse método retorna uma referência para o objeto peça que está na posição i,j do tabuleiro.
 	// Se a posição não tiver uma peça pertencente ao jogador atual, esse método deve retornar null;
-	this.getPeca = function(i, j) {
-		// Esse é um código de exemplo.
-		// <<<<<<<
-		if (i == peca.i && j == peca.j)
-			return peca;
-		// >>>>>>>
-		return null;
+	this.getPeca = function(i, j) { return _tabuleiro.getPeca(i, j); }
+
+	this.moverPeca = function(peca, i, j) {
+
 	}
+	// this.getPeca = function(i, j) {
+	// 	// Esse é um código de exemplo.
+	// 	// <<<<<<<
+	// 	if (i == peca.i && j == peca.j)
+	// 		return peca;
+	// 	// >>>>>>>
+	// 	return null;
+	// }
 
 	// Esse método move a peça para a posição i, j do tabuleiro.
 	// Se o movimento não for possível, esse método deve retornar false. Caso contrário, deve retornar true;
 	// Não é necessário se preocupar com a existência de outra peça. Caso a posição final da peça esteja ocupada por outra, a peça deverá ser substituída pela nova.
 	// Sempre que esse método for executado com sucesso (retornando true) o turno deve ser atualizado, passando o controle para o outro jogador. Obs: não é permitido que o usuário mova uma peça de outro jogador.
-	this.moverPeca = function(peca, i, j) {
-		// Não pode mover uma peça para fora do tabuleiro.
-		if (i > 7 || i < 0 || j > 7 || j < 0)
-			return false;
+	// this.moverPeca = function(peca, i, j) {
+	// 	// Não pode mover uma peça para fora do tabuleiro.
+	// 	if (i > 7 || i < 0 || j > 7 || j < 0)
+	// 		return false;
 
-		// Não pode mover uma peça para o mesmo lugar.
-		if (peca.i == i && peca.j == j)
-			return false;
+	// 	// Não pode mover uma peça para o mesmo lugar.
+	// 	if (peca.i == i && peca.j == j)
+	// 		return false;
 
-		// Esse é um comportamento de exemplo.
-		// <<<<<<<
-		tabuleiro[peca.i][peca.j] = 0;
-		tabuleiro[i][j] = peca.id;
-		peca.i = i;
-		peca.j = j;
-		// >>>>>>>
-		return true;
-	}
+	// 	// Esse é um comportamento de exemplo.
+	// 	// <<<<<<<
+	// 	tabuleiro[peca.i][peca.j] = 0;
+	// 	tabuleiro[i][j] = peca.id;
+	// 	peca.i = i;
+	// 	peca.j = j;
+	// 	// >>>>>>>
+	// 	return true;
+	// }
 }

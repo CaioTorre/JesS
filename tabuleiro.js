@@ -1,12 +1,13 @@
 function Tabuleiro() {
     this._tab = [];
+    const INIT_TAB = 0;
+    for (var i = 0; i < 8; i++) this._tab[i] = [INIT_TAB, INIT_TAB, INIT_TAB, INIT_TAB, INIT_TAB, INIT_TAB, INIT_TAB, INIT_TAB];
+
     //const pecasUnicode = ["", "♔", "♕", "♖", "♗", "♘", "♙", "♚", "♛", "♜", "♝", "♞", "♟"];
-
-    for (var i = 0; i < 8; i++) this._tab[i] = [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined];
-
+    
     this.addPeca = function(peca) {
         // Já existe uma peça nesta posição
-        if (this._tab[peca.getI()][peca.getJ()] != undefined) return false;
+        if (this._tab[peca.getI()][peca.getJ()] != INIT_TAB) return false;
 
         // Adicione a peça e retorne sucesso
         this._tab[peca.getI()][peca.getJ()] = peca;
@@ -15,7 +16,7 @@ function Tabuleiro() {
 
     this.rmPeca = function(i, j) {
         // Não existe peça a ser removida
-        if (this._tab[i][j] == undefined) return undefined;
+        if (this._tab[i][j] == INIT_TAB) return undefined;
 
         //Remova a peça e retorne-a
         var temp = this._tab[i][j];
@@ -25,8 +26,9 @@ function Tabuleiro() {
 
     this.getPeca = function(i, j) {
         // Não existe peça a ser buscada
-        if (this._tab[i][j] == undefined) return undefined;
+        if (this._tab[i][j] == INIT_TAB) return undefined;
 
+        console.log("hit on getpeca");
         // Retorne a referencia à peça exigida
         return this._tab[i][j];
     }

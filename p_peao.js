@@ -1,5 +1,5 @@
 function P_Peao(tipo, posI, posJ, ID) {
-    Peca.call(tipo, posI, posJ, ID);
+    Peca.call(this, tipo, posI, posJ, ID);
     this._firstmove = true;
 }
 
