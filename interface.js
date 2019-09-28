@@ -84,12 +84,8 @@ function atualizar_jogo() {
 
 	for (var i = 0, n = tabuleiro.rows.length; i < n; i++) {
 		for (var j = 0, m = tabuleiro.rows[i].cells.length; j < m; j++) {
-			//console.log("i = " + i + "; j = " + j);
 			peca = tabData.getPeca(i, j);
-			//obj = tabuleiro.rows[i].cells[j]
-				//obj.innerHTML = pecas[tabData[i][j]];
 			if (peca != undefined) {
-				//console.log("hit!");
 				tabuleiro.rows[i].cells[j].innerHTML = peca.getUnicode();
 			} else tabuleiro.rows[i].cells[j].innerHTML = "&nbsp";
 		}
@@ -142,6 +138,7 @@ function gerar_listaPecas() {
 }
 
 function zerar_listaPecas() {
+	// Javascript will throw an error when init-ing before the body is created
 	if (document.getElementById("capPieces") != undefined) 
 		for (var i = 0; i < 2; i++) 
 			document.getElementById("capPieces").rows[i].cells[1].innerHTML = "";

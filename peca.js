@@ -26,8 +26,6 @@ function Peca(tipo, posI, posJ, ID, unic) {
     this._tipo = tipo;
     this._unic = unic;
 
-    //console.log("reg " + tipo);
-
     this.__movemod = -1;
 
     this.getI = function() {return this._i;}
@@ -39,9 +37,6 @@ function Peca(tipo, posI, posJ, ID, unic) {
     this.getTipo = function() {return this._tipo;}
     this.setTipo = function(tipo) {this._tipo = tipo;}
     this.getUnicode = function() { return this._unic; }
-    //this.setUnicode = function(tipo) {this._tipo = tipo;}
-
-    //console.log("Created new base Peca");
 }
 
 Peca.prototype.mover = function(tabuleiro, i, j) {
