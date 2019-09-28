@@ -1,70 +1,45 @@
 const tabX = 7;
 const tabY = 7;
 
+const GAMESTATE_RUNNING = 0;
+const GAMESTATE_GAMEOVER = 1;
+
 function JogoXadrez() {
-	// Identificador de cada peça!
-	const W_KING   = 1;  // "&#9812" ♔
-	const W_QUEEN  = 2;  // "&#9813" ♕
-	const W_ROOK   = 3;  // "&#9814" ♖
-	const W_BISHOP = 4;  // "&#9815" ♗
-	const W_KNIGHT = 5;  // "&#9816" ♘
-	const W_PAWN   = 6;  // "&#9817" ♙
-	const B_KING   = 7;  // "&#9818" ♚
-	const B_QUEEN  = 8;  // "&#9819" ♛
-	const B_ROOK   = 9;  // "&#9820" ♜
-	const B_BISHOP = 10; // "&#9821" ♝
-	const B_KNIGHT = 11; // "&#9822" ♞
-	const B_PAWN   = 12; // "&#9823" ♟
-
-	const P_WHITE  = -1;
-	const P_BLACK  = 1;
-
-	// Esse é um código de exemplo
-	// <<<<<<<
-	// var tabuleiro = new Array(8);
-	// for(var i = 0; i < 8; i++) {
-	// 	tabuleiro[i] = new Array(8);
-	// 	for(j = 0; j < 8; j++)
-	// 		tabuleiro[i][j] = 0; // ID_1 = 0
+	// let _tabuleiro = new Tabuleiro();
+	// for (var i = 0; i < 8; i++) {
+	// 	_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, i, W_PAWN, "♙"));
+	// 	_tabuleiro.addPeca(new P_Peao(P_BLACK, 1, i, B_PAWN, "♟"));
+	// 	switch (i) {
+	// 		case 0:
+	// 		case 7:
+	// 			_tabuleiro.addPeca(new P_Torre(P_WHITE, 7, i, W_ROOK, "♖"));
+	// 			_tabuleiro.addPeca(new P_Torre(P_BLACK, 0, i, B_ROOK, "♜"));
+	// 			break;
+	// 		case 1:
+	// 		case 6:
+	// 			_tabuleiro.addPeca(new P_Cavalo(P_WHITE, 7, i, W_KNIGHT, "♘"));
+	// 			_tabuleiro.addPeca(new P_Cavalo(P_BLACK, 0, i, B_KNIGHT, "♞"));
+	// 			break;
+	// 		case 2:
+	// 		case 5:
+	// 			_tabuleiro.addPeca(new P_Bispo(P_WHITE, 7, i, W_BISHOP, "♗"));
+	// 			_tabuleiro.addPeca(new P_Bispo(P_BLACK, 0, i, B_BISHOP, "♝"));
+	// 			break;
+	// 		case 3:
+	// 			_tabuleiro.addPeca(new P_Rainha(P_WHITE, 7, i, W_QUEEN, "♕"));
+	// 			_tabuleiro.addPeca(new P_Rainha(P_BLACK, 0, i, B_QUEEN, "♛"));
+	// 			break;
+	// 		case 4:
+	// 			_tabuleiro.addPeca(new P_Rei(P_WHITE, 7, i, W_KING, "♔"));
+	// 			_tabuleiro.addPeca(new P_Rei(P_BLACK, 0, i, B_KING, "♚"));
+	// 			break;
+	// 	}
 	// }
 
-	var _tabuleiro = new Tabuleiro();
-	for (var i = 0; i < 8; i++) {
-		_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, i, W_PAWN, "♙"));
-		_tabuleiro.addPeca(new P_Peao(P_BLACK, 1, i, B_PAWN, "♟"));
-		switch (i) {
-			case 0:
-			case 7:
-				_tabuleiro.addPeca(new P_Torre(P_WHITE, 7, i, W_ROOK, "♖"));
-				_tabuleiro.addPeca(new P_Torre(P_BLACK, 0, i, B_ROOK, "♜"));
-				break;
-			case 1:
-			case 6:
-				_tabuleiro.addPeca(new P_Cavalo(P_WHITE, 7, i, W_ROOK, "♘"));
-				_tabuleiro.addPeca(new P_Cavalo(P_BLACK, 0, i, B_ROOK, "♞"));
-				break;
-			case 2:
-			case 5:
-				_tabuleiro.addPeca(new P_Bispo(P_WHITE, 7, i, W_BISHOP, "♗"));
-				_tabuleiro.addPeca(new P_Bispo(P_BLACK, 0, i, B_BISHOP, "♝"));
-				break;
-			case 3:
-				
-				break;
-			case 4:
+	let _tabuleiro;
+	let _jogadorAtual;// = P_WHITE;
+	let _gameState = GAMESTATE_RUNNING;
 
-				break;
-		}
-	}
-
-	// var peca = {};
-	// peca.id = W_PAWN;
-	// peca.i = 0;
-	// peca.j = 0;
-	// tabuleiro[peca.i][peca.j] = peca.id;
-	// >>>>>>>
-
-	// Esse método retorna um array 8x8 contendo o estado do tabuleiro.
 	this.getTabuleiro = function() {
 		// return tabuleiro.getRepresentacao();
 		return _tabuleiro;
@@ -72,21 +47,79 @@ function JogoXadrez() {
 
 	// Esse método reinicia o jogo.
 	this.reiniciar = function() {
-
+		_jogadorAtual = P_WHITE;
+		_tabuleiro = new Tabuleiro();
+		_gamestate = GAMESTATE_RUNNING;
+		for (var i = 0; i < 8; i++) {
+			_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, i, W_PAWN, "♙"));
+			_tabuleiro.addPeca(new P_Peao(P_BLACK, 1, i, B_PAWN, "♟"));
+			switch (i) {
+				case 0:
+				case 7:
+					_tabuleiro.addPeca(new P_Torre(P_WHITE, 7, i, W_ROOK, "♖"));
+					_tabuleiro.addPeca(new P_Torre(P_BLACK, 0, i, B_ROOK, "♜"));
+					break;
+				case 1:
+				case 6:
+					_tabuleiro.addPeca(new P_Cavalo(P_WHITE, 7, i, W_KNIGHT, "♘"));
+					_tabuleiro.addPeca(new P_Cavalo(P_BLACK, 0, i, B_KNIGHT, "♞"));
+					break;
+				case 2:
+				case 5:
+					_tabuleiro.addPeca(new P_Bispo(P_WHITE, 7, i, W_BISHOP, "♗"));
+					_tabuleiro.addPeca(new P_Bispo(P_BLACK, 0, i, B_BISHOP, "♝"));
+					break;
+				case 3:
+					_tabuleiro.addPeca(new P_Rainha(P_WHITE, 7, i, W_QUEEN, "♕"));
+					_tabuleiro.addPeca(new P_Rainha(P_BLACK, 0, i, B_QUEEN, "♛"));
+					break;
+				case 4:
+					_tabuleiro.addPeca(new P_Rei(P_WHITE, 7, i, W_KING, "♔"));
+					_tabuleiro.addPeca(new P_Rei(P_BLACK, 0, i, B_KING, "♚"));
+					break;
+			}
+		}
 	}
 
 	// Esse método retorna uma referência para o objeto peça que está na posição i,j do tabuleiro.
 	// Se a posição não tiver uma peça pertencente ao jogador atual, esse método deve retornar null;
-	this.getPeca = function(i, j) { return _tabuleiro.getPeca(i, j); }
+	this.getPeca = function(i, j) { var p = _tabuleiro.getPeca(i, j); return (p == undefined || p.getTipo() != _jogadorAtual) ? null : p; }
+
+	this.getGameState = function() { return _gameState; }
 
 	this.moverPeca = function(peca, i, j) {
-		var move_res = peca.mover(_tabuleiro, i, j);
-		if (move_res == MOVE_OK || move_res == MOVE_CAP) {
-			var ret = _tabuleiro.regMovimento(peca, i, j);
-			return true;
+		if (_gameState == GAMESTATE_RUNNING) {
+			var move_res = peca.mover(_tabuleiro, i, j);
+			if (move_res == MOVE_OK || move_res == MOVE_CAP) {
+				var ret = _tabuleiro.regMovimento(peca, i, j);
+				_jogadorAtual = (_jogadorAtual == P_WHITE ? P_BLACK : P_WHITE);
+				if (ret != undefined) { 
+					if (ret.getID() == W_KING || ret.getID() == B_KING) _gameState = GAMESTATE_GAMEOVER;
+					return ret;
+				}
+				return true;
+			}
+			return false;
 		}
 		return false;
 	}
+
+	this.getMoveMap = function(peca) {
+		var aux = [];
+		for (var i = 0; i < 8; i++) {
+			//console.log("\t"+i);
+			aux[i] = [];
+			for (var j = 0; j < 8; j++) {
+				//console.log("\t\t"+j);
+				aux[i][j] = peca.mover(_tabuleiro, i, j, false);
+			}
+		}
+		return aux;
+	}
+
+	this.getJogadorAtualString = function() { return _jogadorAtual == P_WHITE ? "Branco" : "Preto"; }
+	this.getJogadorAnteriorString = function() { return _jogadorAtual != P_WHITE ? "Branco" : "Preto"; }
+	this.getJogadorAtualBool = function() { return _jogadorAtual == P_WHITE ? 0 : 1; }
 	// this.getPeca = function(i, j) {
 	// 	// Esse é um código de exemplo.
 	// 	// <<<<<<<

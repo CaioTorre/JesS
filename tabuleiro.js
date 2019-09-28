@@ -67,7 +67,6 @@ function Tabuleiro() {
         var auxJ = peca.getJ();
         this._setCoord(peca, i, j);
         this._setCoord(INIT_TAB, auxI, auxJ);
-        console.log("Old pos now " + this._getCoord(auxI, auxJ));
         peca.setI(i);
         peca.setJ(j);
         return aux;

@@ -17,6 +17,6 @@ P_Cavalo.prototype.mover = function(tabuleiro, i, j) {
     if (this._j == j) return MOVE_FAIL;
     if (Math.abs(this._i - i) + Math.abs(this._j - j) != 3) return MOVE_FAIL;
 
-    // Caso contrario, movimento válido
-    return MOVE_OK;
+    // Checagem captura de peças
+    return Peca.prototype.checkCap.call(this, tabuleiro, i, j);
 }
