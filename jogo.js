@@ -1,3 +1,6 @@
+const tabX = 7;
+const tabY = 7;
+
 function JogoXadrez() {
 	// Identificador de cada peça!
 	const W_KING   = 1;  // "&#9812" ♔
@@ -13,7 +16,7 @@ function JogoXadrez() {
 	const B_KNIGHT = 11; // "&#9822" ♞
 	const B_PAWN   = 12; // "&#9823" ♟
 
-	const P_WHITE  = 0;
+	const P_WHITE  = -1;
 	const P_BLACK  = 1;
 
 	// Esse é um código de exemplo
@@ -26,7 +29,33 @@ function JogoXadrez() {
 	// }
 
 	var _tabuleiro = new Tabuleiro();
-	_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, 0, W_PAWN, "♟"));
+	for (var i = 0; i < 8; i++) {
+		_tabuleiro.addPeca(new P_Peao(P_WHITE, 6, i, W_PAWN, "♙"));
+		_tabuleiro.addPeca(new P_Peao(P_BLACK, 1, i, B_PAWN, "♟"));
+		switch (i) {
+			case 0:
+			case 7:
+				_tabuleiro.addPeca(new P_Torre(P_WHITE, 7, i, W_ROOK, "♖"));
+				_tabuleiro.addPeca(new P_Torre(P_BLACK, 0, i, B_ROOK, "♜"));
+				break;
+			case 1:
+			case 6:
+				_tabuleiro.addPeca(new P_Cavalo(P_WHITE, 7, i, W_ROOK, "♘"));
+				_tabuleiro.addPeca(new P_Cavalo(P_BLACK, 0, i, B_ROOK, "♞"));
+				break;
+			case 2:
+			case 5:
+				_tabuleiro.addPeca(new P_Bispo(P_WHITE, 7, i, W_BISHOP, "♗"));
+				_tabuleiro.addPeca(new P_Bispo(P_BLACK, 0, i, B_BISHOP, "♝"));
+				break;
+			case 3:
+				
+				break;
+			case 4:
+
+				break;
+		}
+	}
 
 	// var peca = {};
 	// peca.id = W_PAWN;
@@ -51,7 +80,12 @@ function JogoXadrez() {
 	this.getPeca = function(i, j) { return _tabuleiro.getPeca(i, j); }
 
 	this.moverPeca = function(peca, i, j) {
-
+		var move_res = peca.mover(_tabuleiro, i, j);
+		if (move_res == MOVE_OK || move_res == MOVE_CAP) {
+			var ret = _tabuleiro.regMovimento(peca, i, j);
+			return true;
+		}
+		return false;
 	}
 	// this.getPeca = function(i, j) {
 	// 	// Esse é um código de exemplo.

@@ -25,6 +25,8 @@ function select(i,j) {
 		atualizar_jogo();
 	} else {
 		alert("Movimento invalido!");
+		select.obj_clicado.style.backgroundColor = select.obj_bgcolor;
+		select.obj_clicado = null;
 	}
 }
 
@@ -36,14 +38,14 @@ function atualizar_jogo() {
 
 	for (var i = 0, n = tabuleiro.rows.length; i < n; i++) {
 		for (var j = 0, m = tabuleiro.rows[i].cells.length; j < m; j++) {
-			console.log("i = " + i + "; j = " + j);
+			//console.log("i = " + i + "; j = " + j);
 			peca = tabData.getPeca(i, j);
 			//obj = tabuleiro.rows[i].cells[j]
 				//obj.innerHTML = pecas[tabData[i][j]];
 			if (peca != undefined) {
-				console.log("hit!");
+				//console.log("hit!");
 				tabuleiro.rows[i].cells[j].innerHTML = peca.getUnicode();
-			}
+			} else tabuleiro.rows[i].cells[j].innerHTML = "&nbsp";
 		}
 	}
 }
