@@ -25,6 +25,7 @@ function select(i,j) {
 		obj.style.backgroundColor = "green";
 
 		var mmap = jogo.getMoveMap(peca);
+		// var mmap = jogo.getMMap(peca);
 		for (var _i = 0; _i < 8; _i++) {
 			for (var _j = 0; _j < 8; _j++) {
 				if (!(_i == i && _j == j)) {
@@ -60,7 +61,8 @@ function select(i,j) {
 			select.obj_clicado = null;
 			refresh_BGs();
 		} else { //Captura de peças
-			document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += ret.getUnicode();
+			//document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += ret.getUnicode();
+			document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += "<div onclick=\"revivePiece(" + ret.getTipo() + ", " + ret.getID() + ");\">" + ret.getUnicode() + "</div>"; //id=\"" + ret.getTipo() + "|" + ret.getID() + "|" + ret.getUnicode() + "\"
 			select.obj_clicado.style.backgroundColor = select.obj_bgcolor;
 			select.obj_clicado = null;
 			atualizar_jogo();
@@ -68,6 +70,10 @@ function select(i,j) {
 			if (jogo.getGameState() == GAMESTATE_GAMEOVER) alert("Fim do jogo\nVencedor: " + jogo.getJogadorAnteriorString())
 		}
 	}
+}
+
+function revivePiece(tipo, id) {
+	jogo.revivePiece(tipo, id);
 }
 
 function refresh_BGs() {

@@ -62,3 +62,24 @@ Peca.prototype.checkCap = function(tabuleiro, i, j) {
     // Caso contrario, movimento válido
     return MOVE_OK;
 }
+
+Peca.prototype.getUnicodeID = function(id) { return ["", "♔", "♕", "♖", "♗", "♘", "♙", "♚", "♛", "♜", "♝", "♞", "♟"][id]; }
+
+Peca.prototype.autoCreate = function(tipo, i, j, id, unicode) {
+    if (unicode == undefined) unicode = Peca.prototype.getUnicodeID.call(null, id);
+    if (id <= 0) return undefined;
+    return new [
+        P_Rei   (tipo, i, j, W_KING,   unicode),
+        P_Rainha(tipo, i, j, W_QUEEN,  unicode),
+        P_Torre (tipo, i, j, W_ROOK,   unicode),
+        P_Bispo (tipo, i, j, W_BISHOP, unicode),
+        P_Cavalo(tipo, i, j, W_KNIGHT, unicode),
+        P_Peao  (tipo, i, j, W_PAWN,   unicode),
+        P_Rei   (tipo, i, j, B_KING,   unicode),
+        P_Rainha(tipo, i, j, B_QUEEN,  unicode),
+        P_Torre (tipo, i, j, B_ROOK,   unicode),
+        P_Bispo (tipo, i, j, B_BISHOP, unicode),
+        P_Cavalo(tipo, i, j, B_KNIGHT, unicode),
+        P_Peao  (tipo, i, j, B_PAWN,   unicode)
+    ][--id];
+}

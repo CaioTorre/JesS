@@ -17,7 +17,7 @@ P_Peao.prototype.mover = function(tabuleiro, i, j, write) {
     var moveQuant = this.__movemod * this._tipo * (this._i - i);
     // Peão não pode andar na diagonal a menos que seja para comer uma peça
     if (moveQuant == 1 && Math.abs(this._j - j) == 1) {
-        if (tabuleiro.getPeca(i, j) != undefined) return MOVE_CAP;
+        if (tabuleiro.getPeca(i, j) != undefined && tabuleiro.getPeca(i, j).getTipo() != this._tipo) return MOVE_CAP;
         return MOVE_FAIL;
     }
 

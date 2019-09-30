@@ -3,11 +3,13 @@ const tabY = 7;
 
 const GAMESTATE_RUNNING = 0;
 const GAMESTATE_GAMEOVER = 1;
+const GAMESTATE_REVIVING = 2;
 
 function JogoXadrez() {
 	let _tabuleiro;
 	let _jogadorAtual;// = P_WHITE;
 	let _gameState = GAMESTATE_RUNNING;
+	let _danglingPawn = undefined;
 
 	this.getTabuleiro = function() {
 		// return tabuleiro.getRepresentacao();
@@ -61,11 +63,21 @@ function JogoXadrez() {
 			var move_res = peca.mover(_tabuleiro, i, j);
 			if (move_res == MOVE_OK || move_res == MOVE_CAP) {
 				var ret = _tabuleiro.regMovimento(peca, i, j);
-				_jogadorAtual = (_jogadorAtual == P_WHITE ? P_BLACK : P_WHITE);
 				if (ret != undefined) { 
 					if (ret.getID() == W_KING || ret.getID() == B_KING) _gameState = GAMESTATE_GAMEOVER;
-					return ret;
+					//_jogadorAtual = (_jogadorAtual == P_WHITE ? P_BLACK : P_WHITE);
+					//return ret;
 				}
+				if (peca.getID() == W_PAWN && i == 0) {
+					_danglingPawn = peca;
+					this.triggerRevive();
+				} else if (peca.getID() == B_PAWN && i == 7) {
+					_danglingPawn = peca;
+					this.triggerRevive();
+				} else {
+					_jogadorAtual = (_jogadorAtual == P_WHITE ? P_BLACK : P_WHITE);
+				}
+				if (ret != undefined) return ret;
 				return true;
 			}
 			return false;
@@ -86,7 +98,34 @@ function JogoXadrez() {
 		return aux;
 	}
 
+	// this.getMMap = function(peca) { return _tabuleiro.getMMap(peca); }
+
 	this.getJogadorAtualString = function() { return _jogadorAtual == P_WHITE ? "Branco" : "Preto"; }
 	this.getJogadorAnteriorString = function() { return _jogadorAtual != P_WHITE ? "Branco" : "Preto"; }
 	this.getJogadorAtualBool = function() { return _jogadorAtual == P_WHITE ? 0 : 1; }
+
+	this.revivePiece = function(tipo, id) {
+		console.log("Revive called " + arguments[0] + ", " + arguments[1]);
+		if (this._gameState == GAMESTATE_REVIVING) {
+			if (tipo == this._jogadorAtual) {
+				console.log("Check matched");
+				_tabuleiro.rmPeca(_danglingPawn.getI(), _danglingPawn.getJ());
+				// Criar nova peca a partir do que foi selecionado
+				_tabuleiro.addPeca(Peca.prototype.autoCreate.call(null, tipo, _danglingPawn.getI(), _danglingPawn.getJ(), id))
+				_danglingPawn = undefined;
+				this._gameState = GAMESTATE_RUNNING;
+				// Atualizar jogador atual
+				_jogadorAtual = (_jogadorAtual == P_WHITE ? P_BLACK : P_WHITE);
+				atualizar_jogo();
+			}
+		}
+		//console.log("Selecionada peca " + tipo + ", " + id + " (" + Peca.prototype.getUnicodeID.call(null, id) + ")");
+		//console.log("Selecionada peca tipo {}, id {}, unicode {}".format(tipo, id, Peca.prototype.getUnicodeID.call(null, id)));
+	}
+
+	this.triggerRevive = function() {
+
+		this._gameState = GAMESTATE_REVIVING;
+		alert("Escolha uma peça para converter o peão");
+	}
 }

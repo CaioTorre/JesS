@@ -50,6 +50,10 @@ function Tabuleiro() {
         return temp;
     }
 
+    // this.getRepr = function()     { return this._tab.map( l => l.map( c => c.getID() ) ); }
+    
+    // this.getMMap = function(peca) { let tab = this._tab; return this._tab.map( (_l, _i, _v1) => _l.map( (_c, _j, _v2) => peca.mover(tab, _i, _j, false) ) ); }
+
     this.regMovimento = function(peca, i, j) {
         var aux;
         if (this._tab[i][j] != INIT_TAB) {
