@@ -10,7 +10,7 @@ function Tabuleiro() {
     
     this.addPeca = function(peca) {
         // Já existe uma peça nesta posição
-        if (this._getCoord(peca.getI(), peca.getJ()) != INIT_TAB) return false;
+        if (this._getCoord(peca.getI(), peca.getJ()) != INIT_TAB) { return false; }
 
         // Adicione a peça e retorne sucesso
         this._setCoord(peca, peca.getI(), peca.getJ());
@@ -19,7 +19,7 @@ function Tabuleiro() {
 
     this.rmPeca = function(i, j) {
         // Não existe peça a ser removida
-        if (this._getCoord(i, j) == INIT_TAB) return undefined;
+        if (this._getCoord(i, j) == INIT_TAB) { return undefined; }
 
         //Remova a peça e retorne-a
         var temp = this._getCoord(i, j);
@@ -29,8 +29,8 @@ function Tabuleiro() {
 
     this.getPeca = function(i, j) {
         // Não existe peça a ser buscada
-        if (this._getCoord(i, j) == INIT_TAB) return undefined;
-
+        if (this._getCoord(i, j) == INIT_TAB) { return undefined; }
+        //console.log('[GET]' + this._getCoord(i, j).getID());
         // Retorne a referencia à peça exigida
         return this._getCoord(i, j);
     }

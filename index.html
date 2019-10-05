@@ -20,8 +20,14 @@
 	<script src="jogo.js"></script>
 	<script src="interface.js"></script>
 </head>
-<body>
+<body onload="limpa_pecas()">
 	<button onclick="reiniciar_jogo()">Reiniciar jogo</button></br>
+	<div id="pieceSel">
+		<button onclick="inter_revive('Torre')">♖</button>
+		<button onclick="inter_revive('Cavalo')">♘</button>
+		<button onclick="inter_revive('Bispo')">♗</button>
+		<button onclick="inter_revive('Rainha')">♕</button>
+	</div>
 	<a href="https://comojogarxadrez.com.br/posicao-inicial-das-pecas-no-tabuleiro-de-xadrez.html">Regras do jogo</a></br>
 	Jogador atual: <div id='jogAtualDisp'>Branco</div> </br>
 </body>

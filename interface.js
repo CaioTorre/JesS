@@ -61,20 +61,23 @@ function select(i,j) {
 			select.obj_clicado = null;
 			refresh_BGs();
 		} else { //Captura de peças
-			//document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += ret.getUnicode();
-			document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += "<div onclick=\"revivePiece(" + ret.getTipo() + ", " + ret.getID() + ");\">" + ret.getUnicode() + "</div>"; //id=\"" + ret.getTipo() + "|" + ret.getID() + "|" + ret.getUnicode() + "\"
+			if (jogo.getGameState() == GAMESTATE_RUNNING)
+				document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += ret.getUnicode();
+			else
+				document.getElementById('capPieces').rows[1 - jogo.getJogadorAnteriorBool()].cells[1].innerHTML += ret.getUnicode();
+				//document.getElementById('capPieces').rows[1 - jogo.getJogadorAtualBool()].cells[1].innerHTML += "<div>" + ret.getUnicode() + "</div>"; //id=\"" + ret.getTipo() + "|" + ret.getID() + "|" + ret.getUnicode() + "\"
 			select.obj_clicado.style.backgroundColor = select.obj_bgcolor;
 			select.obj_clicado = null;
 			atualizar_jogo();
 			refresh_BGs();
-			if (jogo.getGameState() == GAMESTATE_GAMEOVER) alert("Fim do jogo\nVencedor: " + jogo.getJogadorAnteriorString())
 		}
+		if (jogo.getGameState() == GAMESTATE_GAMEOVER) alert("Fim do jogo\nVencedor: " + jogo.getJogadorAtualString());
 	}
 }
 
-function revivePiece(tipo, id) {
-	jogo.revivePiece(tipo, id);
-}
+//function revivePiece(tipo, id) {
+//	jogo.revivePiece(tipo, id);
+//}
 
 function refresh_BGs() {
 	for (var i = 0; i < 8; i++)
@@ -149,5 +152,12 @@ function zerar_listaPecas() {
 		for (var i = 0; i < 2; i++) 
 			document.getElementById("capPieces").rows[i].cells[1].innerHTML = "";
 }
+
+function inter_revive(nome) {
+	jogo.revivePiece(nome);
+}
+
+function limpa_pecas() { if (document.getElementById("pieceSel") != undefined) document.getElementById("pieceSel").style.visibility="hidden"; }
+function mostra_pecas() { if (document.getElementById("pieceSel") != undefined) document.getElementById("pieceSel").style.visibility="visible"; }
 
 init();
