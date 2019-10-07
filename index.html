@@ -23,12 +23,21 @@
 <body onload="limpa_pecas()">
 	<button onclick="reiniciar_jogo()">Reiniciar jogo</button></br>
 	<div id="pieceSel">
-		<button onclick="inter_revive('Torre')">♖</button>
-		<button onclick="inter_revive('Cavalo')">♘</button>
-		<button onclick="inter_revive('Bispo')">♗</button>
-		<button onclick="inter_revive('Rainha')">♕</button>
+			<table>
+				<tr>
+					<td><button onclick="inter_revive('Torre')">♖</button></td>
+					<td><button onclick="inter_revive('Cavalo')">♘</button></td>
+					<td><button onclick="inter_revive('Bispo')">♗</button></td>
+					<td><button onclick="inter_revive('Rainha')">♕</button></td>
+				</tr>
+			</table>
 	</div>
+	<table id="jogTabela">
+		<tr>
+			<td>Jogador atual:</td>
+			<td><div id='jogAtualDisp'>Branco</div></td>
+		</tr>
+	</table>
 	<a href="https://comojogarxadrez.com.br/posicao-inicial-das-pecas-no-tabuleiro-de-xadrez.html">Regras do jogo</a></br>
-	Jogador atual: <div id='jogAtualDisp'>Branco</div> </br>
 </body>
 </html>
